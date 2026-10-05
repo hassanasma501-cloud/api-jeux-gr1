@@ -46,20 +46,20 @@ Ouvrez http://localhost:8000/docs : la liste des routes s'affiche.
 
 ## Configuration
 
-Copiez `.env` en `.env.local` et renseignez les variables obligatoires. Ne commitez jamais ce fichier.
+L'application utilise un fichier `.env` pour sa configuration. Copiez `.env` et renseignez les variables obligatoires. Ne commitez jamais ce fichier.
 
 | Variable | Rôle | Obligatoire | Valeur par défaut |
-|----------|------|-------------|-------------------|
-| `DATABASE_URL` | URL de connexion à la base PostgreSQL | Oui | — |
-| `CLE_SECRETE` | Clé de signature des jetons JWT | Oui | — |
-| `ALGORITHME_JETON` | Algorithme JWT | Non | `HS256` |
-| `DUREE_JETON_MINUTES` | Durée de validité d'un jeton (minutes) | Non | `30` |
-| `ORIGINES_AUTORISEES` | Origines CORS autorisées (JSON ou virgules) | Non | `["http://localhost:5173"]` |
-| `ENVIRONNEMENT` | Nom de l'environnement (`developpement`, `production`) | Non | `developpement` |
-| `NIVEAU_JOURNAL` | Niveau de log (`DEBUG`, `INFO`, `WARNING`) | Non | `INFO` |
-| `ECHO_SQL` | Afficher les requêtes SQL dans le terminal | Non | `false` |
-| `MAX_TENTATIVES_CONNEXION` | Nombre max de tentatives de connexion | Non | `5` |
-| `FENETRE_TENTATIVES_MINUTES` | Fenêtre de temps pour les tentatives (minutes) | Non | `15` |
+| :--- | :--- | :--- | :--- |
+| `DATABASE_URL` | Adresse de connexion à la base de données | Oui | — |
+| `CLE_SECRETE` | Clé utilisée pour signer les jetons | Oui | — |
+| `ALGORITHME_JETON` | Algorithme de chiffrement des jetons | Non | `"HS256"` |
+| `DUREE_JETON_MINUTES` | Durée de validité d'un jeton (en minutes) | Non | `30` |
+| `ORIGINES_AUTORISEES` | Liste des domaines autorisés (CORS) | Non | `["http://localhost:5173"]` |
+| `ENVIRONNEMENT` | Définit si l'API est en développement ou production | Non | `"developpement"` |
+| `NIVEAU_JOURNAL` | Niveau de verbosité des logs | Non | `"INFO"` |
+| `ECHO_SQL` | Affiche ou non les requêtes SQL dans les logs | Non | `False` |
+| `MAX_TENTATIVES_CONNEXION` | Nombre maximum d'essais de connexion | Non | `5` |
+| `FENETRE_TENTATIVES_MINUTES` | Fenêtre de temps pour bloquer les tentatives (en min) | Non | `15` |
 
 Générez une clé secrète sécurisée :
 ```bash
@@ -68,29 +68,12 @@ python -c "import secrets; print(secrets.token_urlsafe(32))"
 
 ## Utilisation
 
-La documentation interactive complète est disponible à `/docs` une fois l'API lancée.
+L'API documente automatiquement toutes ses routes. Une fois le serveur lancé, ouvrez http://localhost:8000/docs pour consulter la documentation interactive et tester l'API.
 
 Exemples de requêtes :
 
-**Lister les jeux**
-```bash
-curl http://localhost:8000/api/v1/jeux
-```
-
-**Créer un compte et se connecter**
-```bash
-curl -X POST http://localhost:8000/api/v1/inscription \
-  -H "Content-Type: application/json" \
-  -d '{"email": "moi@example.com", "mot_de_passe": "monmotdepasse123"}'
-
-curl -X POST http://localhost:8000/api/v1/connexion \
-  -d "username=moi@example.com&password=monmotdepasse123"
-```
-
-**Consulter les statistiques du catalogue**
-```bash
-curl http://localhost:8000/api/v1/jeux/statistiques
-```
+- Récupérer la liste des jeux : `GET /api/v1/jeux`
+- Consulter les statistiques du catalogue : `GET /api/v1/jeux/statistiques`
 
 ## Tests
 
