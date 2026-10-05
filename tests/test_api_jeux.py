@@ -210,6 +210,7 @@ def test_statistiques_catalogue_vide(client):
     corps = reponse.json()
     assert corps["nombre"] == 0
     assert corps["moyenne"] == 0.0
+    assert corps["meilleure_note"] is None
     assert corps["par_genre"] == {}
 
 def test_editeur_imbrique_dans_la_reponse(client, entetes, editeur):
