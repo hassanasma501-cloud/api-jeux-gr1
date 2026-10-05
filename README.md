@@ -77,50 +77,52 @@ Exemples de requêtes :
 
 ## Tests
 
-Lancer tous les tests :
+Pour lancer l'ensemble des tests :
+
 ```bash
 pytest
 ```
 
-Lancer un test précis :
-```bash
-pytest tests/test_api_jeux.py -v
-```
+Pour vérifier la qualité du code avec le linter :
 
-Vérifier la qualité du code :
 ```bash
 ruff check .
 ```
 
+Les tests doivent tous passer et `ruff check .` ne doit signaler aucune erreur.
+
 ## Architecture
+
+L'API est organisée en plusieurs couches afin de séparer les responsabilités.
 
 ```mermaid
 flowchart LR
-    Client -->|HTTP| Routeurs
-    Routeurs --> Services
-    Services --> Dépôts
-    Dépôts --> Base[(PostgreSQL)]
-    Services --> Modèles
-    Routeurs --> Modèles
+    Client[Client HTTP] --> Routeurs[Routeurs FastAPI]
+    Routeurs --> Services[Services]
+    Services --> Depots[Dépôts]
+    Depots --> Base[(Base de données SQLite)]
+    Depots --> Tables[Modèles SQLAlchemy]
 ```
 
-Dossiers du répertoire `app/` :
+Principaux dossiers de `app/` :
 
-| Dossier | Rôle |
-|---------|------|
-| `routeurs/` | Endpoints HTTP — reçoit les requêtes et renvoie les réponses |
-| `services/` | Logique métier — règles, validations, exceptions applicatives |
-| `depots/` | Accès aux données — requêtes SQL via SQLAlchemy |
-| `tables/` | Modèles ORM SQLAlchemy — structure des tables |
-| `modeles/` | Schémas Pydantic — validation des entrées et sorties |
+- `routeurs/` : définit les routes HTTP de l'API et reçoit les requêtes des clients.
+- `services/` : contient la logique métier de l'application.
+- `depots/` : gère l'accès aux données et les requêtes vers la base de données.
+- `tables/` : contient les modèles SQLAlchemy représentant les tables de la base de données.
+
+Le fichier `main.py` initialise l'application FastAPI et charge les routeurs.
+
+Le fichier `config.py` centralise la configuration de l'application et les variables d'environnement.
 
 ## Contribuer
 
-Une issue, une branche, une PR relue — jamais de push direct sur `main`.
+Le travail collaboratif suit le principe suivant :
 
-1. Créez ou assignez-vous une issue
-2. Partez d'un `main` à jour : `git switch main && git pull`
-3. Créez une branche : `git switch -c fix/42-mon-correctif`
-4. Commitez avec le format conventionnel : `fix(jeux): corriger le tri par note`
-5. Poussez et ouvrez une PR avec contexte, changements, impact et `Closes #42`
-6. Attendez une relecture avant de fusionner
+1. Une issue est créée pour décrire le bug ou l'évolution à traiter.
+2. Une branche dédiée est créée à partir d'un `main` à jour.
+3. Les modifications sont réalisées et enregistrées avec des commits explicites.
+4. La branche est poussée sur GitHub et une Pull Request est ouverte.
+5. Un autre membre de l'équipe relit la Pull Request et laisse ses commentaires.
+6. Après validation de la relecture, la Pull Request est fusionnée dans `main`.
+7. La branche de travail est ensuite supprimée.
