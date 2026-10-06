@@ -36,9 +36,12 @@ git clone https://github.com/hassanasma501-cloud/api-jeux-gr1.git
 cd api-jeux-gr1
 python -m venv .venv
 source .venv/bin/activate          # Windows : .venv\Scripts\activate
-pip install -r requirements.txt
-cp .env .env.local                 # Windows : copy .env .env.local
-# Remplissez DATABASE_URL et CLE_SECRETE dans .env.local
+pip install -r requirements-dev.txt
+cp .env.example .env               # Windows : copy .env.example .env
+# Dans .env, remplacez ces deux lignes :
+#   DATABASE_URL=sqlite:///./jeux.db
+#   ORIGINES_AUTORISEES=["http://localhost:5173"]
+python scripts/peupler.py
 fastapi dev app/main.py
 ```
 
@@ -46,7 +49,7 @@ Ouvrez http://localhost:8000/docs : la liste des routes s'affiche.
 
 ## Configuration
 
-L'application utilise un fichier `.env` pour sa configuration. Copiez `.env` et renseignez les variables obligatoires. Ne commitez jamais ce fichier.
+L'application utilise un fichier `.env` pour sa configuration. Copiez `.env.example` en `.env` et renseignez les variables obligatoires. Ne commitez jamais ce fichier.
 
 | Variable | Rôle | Obligatoire | Valeur par défaut |
 | :--- | :--- | :--- | :--- |
