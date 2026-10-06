@@ -103,7 +103,7 @@ flowchart LR
     Client[Client HTTP] --> Routeurs[Routeurs FastAPI]
     Routeurs --> Services[Services]
     Services --> Depots[Dépôts]
-    Depots --> Base[(Base de données SQLite)]
+    Depots --> Base[(Base de données<br/>SQLite ou PostgreSQL)]
     Depots --> Tables[Modèles SQLAlchemy]
 ```
 
