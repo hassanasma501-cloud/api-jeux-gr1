@@ -55,7 +55,7 @@ L'application utilise un fichier `.env` pour sa configuration. Copiez `.env.exam
 | :--- | :--- | :--- | :--- |
 | `DATABASE_URL` | Adresse de connexion à la base de données | Oui | — |
 | `CLE_SECRETE` | Clé utilisée pour signer les jetons | Oui | — |
-| `ALGORITHME_JETON` | Algorithme de chiffrement des jetons | Non | `"HS256"` |
+| `ALGORITHME_JETON` | Algorithme de signature des jetons | Non | `"HS256"` |
 | `DUREE_JETON_MINUTES` | Durée de validité d'un jeton (en minutes) | Non | `30` |
 | `ORIGINES_AUTORISEES` | Liste des domaines autorisés (CORS) | Non | `["http://localhost:5173"]` |
 | `ENVIRONNEMENT` | Définit si l'API est en développement ou production | Non | `"developpement"` |
